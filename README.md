@@ -1,12 +1,12 @@
 <h1 align="center">
-    Stefanini Portal Horas Marker
+    Stefanini Marker
 </h1>
 
 <p align="center">
     <a href="#" target="blank">
         <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Eo_circle_green_white_checkmark.svg/2048px-Eo_circle_green_white_checkmark.svg.png"
-            width="150"
+            src="./assets/stefanini-marker.svg"
+            width="300"
             title="Marker"
             alt="Marker"
         />
