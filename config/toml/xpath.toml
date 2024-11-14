@@ -1,0 +1,8 @@
+[XPATH.MAIN]
+register_button = "//button[@id='btn-remote-record']"
+popup_div = "//div[@role='alert' and @type='success']"
+
+[XPATH.LOGIN]
+email_input = "//input[@id='email']"
+password_input = "//input[@id='password']"
+login_button = "//button[@id='btn-login']"
