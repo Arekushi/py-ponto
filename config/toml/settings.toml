@@ -1,5 +1,0 @@
-[VARS]
-delay_minutes_range = 2
-
-[DIRS]
-logging = "logs"

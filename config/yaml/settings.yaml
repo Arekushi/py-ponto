@@ -1,0 +1,4 @@
+constants:
+    delay_minutes_range: 2
+    dirs:
+        logging: 'logs'

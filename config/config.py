@@ -1,14 +1,18 @@
+from pathlib import Path
 from dynaconf import Dynaconf
 
 settings = Dynaconf(
     load_dotenv=True,
     envvar_prefix=False,
     settings_files=[
-        './toml/settings.toml',
-        './toml/xpath.toml',
-        './toml/.secrets.toml',
+        './yaml/settings.yaml',
+        './yaml/xpath.yaml',
+        './yaml/notion.yaml',
+        './yaml/.secrets.yaml',
     ]
 )
+
+ROOT_DIR = Path(__file__).parent.parent
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.
 # `settings_files` = Load these files in the order.

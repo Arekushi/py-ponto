@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "py-ponto"
 version = "0.1.0"
-description = ""
+description = "Projeto de marcador automático de ponto universal usando o Selenium com integração com o Notion."
 authors = ["Alexandre Ferreira de Lima <alexandre.ferreira1445@gmail.com>"]
 readme = "README.md"
 package-mode = false
@@ -13,6 +13,9 @@ selenium = "^4.25.0"
 webdriver-manager = "^4.0.2"
 winotify = "^1.1.0"
 notion-client = "^2.2.1"
+dependency-injector = "^4.43.0"
+pytz = "^2024.2"
+asyncio = "^3.4.3"
 
 
 [build-system]

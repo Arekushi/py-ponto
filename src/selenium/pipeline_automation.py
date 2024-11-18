@@ -10,8 +10,10 @@ import logging
 
 
 class PipelineAutomation:
-    def __init__(self, url, wait_time=10):
-        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    def __init__(self, url, wait_time=60):
+        self.driver = webdriver.Chrome(
+            service=Service(ChromeDriverManager().install())
+        )
         self.wait = WebDriverWait(self.driver, wait_time)
         self.driver.get(url)
 

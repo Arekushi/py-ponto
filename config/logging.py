@@ -1,11 +1,12 @@
 import os
 import logging
-from datetime import datetime
+
 from config.config import settings
+from src.helpers.date_helper import today_date_str
 
 
-LOG_DIR = settings.DIRS.logging
-LOG_FILENAME = os.path.join(LOG_DIR, datetime.now().strftime('%Y-%m-%d') + '.log')
+LOG_DIR = settings.constants.dirs.logging
+LOG_FILENAME = os.path.join(LOG_DIR, today_date_str() + '.log')
 
 
 def setup_logging():    
