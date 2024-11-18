@@ -1,11 +1,13 @@
 import logging
+import pyautogui
 from time import sleep
-
+from config.config import settings
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from src.selenium.action_type import ActionType as AT
@@ -13,9 +15,16 @@ from src.selenium.action_type import ActionType as AT
 
 class PipelineAutomation:
     def __init__(self, url, wait_time=60):
+        options = webdriver.ChromeOptions()
+        options.add_argument(rf"--user-data-dir={settings.chrome.userdata}")
+        options.add_argument(r'--profile-directory=Default')
+        options.add_experimental_option("detach", True)
+        
         self.driver = webdriver.Chrome(
+            options=options,
             service=Service(ChromeDriverManager().install())
         )
+        
         self.wait = WebDriverWait(self.driver, wait_time)
         self.driver.get(url)
 
@@ -24,6 +33,7 @@ class PipelineAutomation:
             AT.INPUT: self.wait_and_input_text,
             AT.WAIT_FOR: self.wait_for_element,
             AT.SLEEP: self.sleep_for_time,
+            AT.KEYBOARD_SHORTCUT: self.execute_keyboard_shortcut,
             AT.CUSTOM: self.execute_custom_action
         }
 
@@ -63,6 +73,18 @@ class PipelineAutomation:
             logging.info("Ação customizada executada com sucesso")
         except Exception as e:
             raise Exception(f"Erro ao executar ação customizada: {e}")
+    
+    def execute_keyboard_shortcut(self, keys, undo_time):
+        try:
+            pyautogui.hotkey(*keys)
+            
+            if undo_time:
+                sleep(undo_time)
+                pyautogui.hotkey(*keys)
+            
+            logging.info("Atalho de teclado executado com sucesso")
+        except Exception as e:
+            raise Exception(f"Erro ao executar atalho de teclado: {e}")
 
     def execute_pipeline(self, actions):
         for action in actions:
@@ -81,6 +103,10 @@ class PipelineAutomation:
                 elif (action_type == AT.SLEEP):
                     time = action.get('time')
                     func(time)
+                elif (action_type == AT.KEYBOARD_SHORTCUT):
+                    keys = action.get('keys')
+                    undo_time = action.get('undo_time')
+                    func(keys, undo_time)
                 else:
                     func(xpath)
                 
