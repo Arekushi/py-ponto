@@ -1,8 +1,5 @@
 [VARS]
 delay_minutes_range = 2
 
-[URLS]
-base_url = "https://portalhoras.stefanini.com"
-
 [DIRS]
 logging = "logs"

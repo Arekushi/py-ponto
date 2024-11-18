@@ -1,20 +1,20 @@
 <h1 align="center">
-    Stefanini Marker
+    Py-Ponto
 </h1>
 
 <p align="center">
     <a href="#" target="blank">
         <img
-            src="./assets/stefanini-marker.svg"
+            src="./assets/py-ponto.svg"
             width="300"
-            title="Marker"
-            alt="Marker"
+            title="Py-Ponto Logo"
+            alt="Py-Ponto Logo"
         />
     </a>
 </p>
 
 <p align="center">
-    Projeto simples de marcador automático de ponto para o site Portal Horas do Grupo Stefanini usando o <a href="https://selenium-python.readthedocs.io/">Selenium</a> com integração com o <a href="https://notion.so">Notion</a>.
+    Projeto de marcador automático de ponto universal usando o <a href="https://selenium-python.readthedocs.io/">Selenium</a> com integração com o <a href="https://notion.so">Notion</a>.
 </p>
 
 ## 🔨 Construído com
@@ -31,15 +31,33 @@ Se quiser o projeto para desenvolver, alguns pré-requisitos são necessários.
 * Poetry
   1. Você pode instalar aqui: [Poetry][poetry_url]
 
-## Variáveis do .secrets.toml
-Eu guardo algumas variáveis sensíveis em um arquivo chamado `.secrets.toml` dentro da pasta `config`, crie esse arquivo lá.
+## Variáveis sensíveis
+Eu guardo algumas variáveis sensíveis em alguns arquivos, estes deverão estar na pasta `config/toml`
+
+### .secrets.toml
+Algumas informações de login, tokens e chaves
 ```toml
 [LOGIN]
 user = '...' # Email ou senha
 password = '...' # Código de acesso
 
 [NOTION]
-api_key = '...'
+api_key = '...' # API Key da sua Integração com o Notion
+
+[URLS]
+base_url = '...' # URL inicial do endereço onde é realizado a marcação de ponto
+```
+
+### xpath.toml
+XPATH dos elementos do site. Não há uma maneira padrão para criar, então é possível criar a sua maneira, aqui está apenas um exemplo.
+```toml
+[XPATH.MAIN]
+register_button = "..."
+
+[XPATH.LOGIN]
+email_input = "..."
+password_input = "..."
+login_button = "..."
 ```
 
 ## Outras variáveis dos arquivos `.toml`
@@ -51,23 +69,8 @@ Algumas configurações de customização da aplicação.
 [VARS]
 delay_minutes_range = 2 # Range de tempo aleatório
 
-[URLS]
-base_url = "..." # URL Base
-
 [DIRS]
 logging = "logs" # Pasta onde serão salvos os logs
-```
-
-### xpath.toml
-XPATH dos elementos do site.
-```toml
-[XPATH.MAIN]
-register_button = "..."
-
-[XPATH.LOGIN]
-email_input = "..."
-password_input = "..."
-login_button = "..."
 ```
 
 ## Actions
