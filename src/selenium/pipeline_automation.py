@@ -16,9 +16,11 @@ from src.selenium.action_type import ActionType as AT
 class PipelineAutomation:
     def __init__(self, url, wait_time=60):
         options = webdriver.ChromeOptions()
-        options.add_argument(rf"--user-data-dir={settings.chrome.userdata}")
-        options.add_argument(r'--profile-directory=Default')
-        options.add_experimental_option("detach", True)
+        
+        if getattr(settings, 'chrome', None) and getattr(settings.chrome, 'userdata', None):
+            options.add_argument(rf"--user-data-dir={settings.chrome.userdata}")
+            options.add_argument(r'--profile-directory=Default')
+            options.add_experimental_option("detach", True)
         
         self.driver = webdriver.Chrome(
             options=options,
@@ -112,6 +114,8 @@ class PipelineAutomation:
                 
                 for callback in callbacks:
                     callback()
+            
+            quit()
 
     def quit(self):
         self.driver.quit()

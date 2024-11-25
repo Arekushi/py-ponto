@@ -1,4 +1,4 @@
-from src.helpers.date_helper import today_date_str, now_datetime_str
+from src.helpers.date_helper import now_date_str, now_datetime_str
 from src.notion.notion_service import NotionService
 
 
@@ -36,7 +36,7 @@ class CantinhoTrabalhoService:
             filter={
                 'property': dia_de_folga.name,
                 dia_de_folga.type: {
-                    'equals': today_date_str()
+                    'equals': now_date_str()
                 }
             }
         )
@@ -49,18 +49,20 @@ class CantinhoTrabalhoService:
         if not today_time_entry:
             return await self.add_time_entry()
 
-        return await self.update_time_entry(
-            page_id=today_time_entry['id'],
-            properties=self.get_next_entry(today_time_entry)
-        )
-    
-    async def add_log_time_entry(self, entry_time, log_content):
-        entry_id = entry_time['id']
+        next_entry = self.get_next_entry(today_time_entry)
         
+        if next_entry:
+            return await self.update_time_entry(
+                page_id=today_time_entry['id'],
+                properties=self.get_next_entry(today_time_entry)
+            )
+        else:
+            raise Exception('Não há mais entradas disponíveis para registro!')
+    
+    async def add_log_time_entry(self, time_entry_id, log_content):
         return await self.notion_service.create_code_block(
-            parent_id=entry_id,
-            content=log_content,
-            language='plain text'
+            parent_id=time_entry_id,
+            content=log_content
         )
 
     async def add_time_entry(self):
@@ -77,7 +79,7 @@ class CantinhoTrabalhoService:
                     'title': [
                         {
                             'text': {
-                                'content': today_date_str('%d/%m/%Y')
+                                'content': now_date_str('%d/%m/%Y')
                             }
                         }
                     ]
@@ -108,7 +110,7 @@ class CantinhoTrabalhoService:
             filter={
                 'property': data.name,
                 data.type: {
-                    'equals': today_date_str()
+                    'equals': now_date_str()
                 }
             }
         )
@@ -139,9 +141,17 @@ class CantinhoTrabalhoService:
             if date:
                 if date.get('start') and not date.get('end'):
                     date['end'] = now_datetime_str()
-                    return {entry: registry}
+                    return {
+                        entry: registry
+                    }
             else:
-                registry['date'] = {'start': now_datetime_str(), 'end': None}
-                return {entry: registry}
+                registry['date'] = {
+                    'start': now_datetime_str(),
+                    'end': None
+                }
+                
+                return {
+                    entry: registry
+                }
 
         return None

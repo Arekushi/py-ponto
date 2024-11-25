@@ -1,4 +1,6 @@
 constants:
-    delay_minutes_range: 2
+    start_minutes_delay: 5
+    random_clocking_minutes_delay: 2
+    timeout_notification_minutes: 3
     dirs:
         logging: 'logs'

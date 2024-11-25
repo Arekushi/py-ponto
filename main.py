@@ -1,51 +1,71 @@
 import asyncio
 import logging
 
+from functools import partial
 from config.config import settings
 from dependency_injector.wiring import inject, Provide
+from desktop_notifier import DesktopNotifier
 
+from notifier.success import success_clocking
 from src.actions import ACTIONS
 from src.selenium.pipeline_automation import PipelineAutomation
 from src.cantinho_trabalho.cantinho_trabalho_service import CantinhoTrabalhoService
-from src.notify import failed_mark, failed_notion, success
-from src.helpers.log_helper import delete_today_log, get_today_log
+from src.helpers.log_helper import delete_yesterday_log, get_today_last_log
 from src.container import Container
+from src.notifier import start_notification, cancel_notification, \
+    failed_notion, success_notion, failed_clocking
 
 
-MAIN_URL = settings.urls.main_url
+notifier = DesktopNotifier(
+    app_name='Py Ponto'
+)
+
+PORTAL_URL = settings.urls.portal
 
 
-async def main():
-    start_automation()
-    await record_notion(log_content=get_today_log())
+@inject
+async def main(
+    ct_service: CantinhoTrabalhoService = Provide[Container.cantinho_trabalho_service]
+):
+    delete_yesterday_log()
     
-    delete_today_log()
-    success().show()
+    if (await ct_service.today_is_day_off()):
+        return
+    
+    await start_notification(
+        notifier,
+        on_success_callbacks=[
+            partial(start_automation),
+            partial(record_notion, ct_service)
+        ],
+        on_cancel_callbacks=[
+            partial(cancel_notification, notifier)
+        ]
+    )
 
 
-def start_automation():
-    automation = PipelineAutomation(MAIN_URL)
+async def start_automation():
+    automation = PipelineAutomation(PORTAL_URL)
     
     try:
         automation.execute_pipeline(ACTIONS)
+        await success_clocking(notifier)
     except Exception as e:
         logging.error(e)
-        failed_mark().show()
-    
-    automation.quit()
+        await failed_clocking(notifier)
 
 
 @inject
 async def record_notion(
-    log_content: str,
-    ct_service: CantinhoTrabalhoService = Provide[Container.cantinho_trabalho_service]
+    ct_service: CantinhoTrabalhoService
 ):
     try:
         time_entry = await ct_service.register_time_entry()
-        await ct_service.add_log_time_entry(time_entry, log_content)
+        await ct_service.add_log_time_entry(time_entry['id'], get_today_last_log())
+        await success_notion(notifier, time_entry['url'])
     except Exception as e:
         logging.error(e)
-        failed_notion().show()
+        await failed_notion(notifier)
 
 
 if __name__ == '__main__':

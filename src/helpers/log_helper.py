@@ -1,40 +1,32 @@
-import os
 import logging
 
-from src.helpers.date_helper import today_date_str
-from config.config import ROOT_DIR
+from config.config import settings, ROOT_DIR
+from src.helpers.date_helper import now_adjusted_by_days, now_date_str
+from src.helpers.path_helper import delete_directory, get_latest_file
 
 
-def delete_today_log():
-    today = today_date_str()
-    log_path = f'{ROOT_DIR}\\logs\\{today}.log'
+LOG_DIR = settings.constants.dirs.logging
+
+
+def delete_yesterday_log():
+    yesterday = now_adjusted_by_days(days=-1)
+    yesterday_log_dir = f'{ROOT_DIR}\\{LOG_DIR}\\{yesterday}'
+    delete_directory(yesterday_log_dir)
+
+
+def get_today_last_log():
+    today = now_date_str()
+    log_path = f'{ROOT_DIR}\\{LOG_DIR}\\{today}'
+    last_log_path = get_latest_file(log_path)
     
     try:
-        logging.shutdown()
-        os.remove(f'{ROOT_DIR}\\logs\\{today}.log')
-    except FileNotFoundError:
-        logging.error(f"Erro: Arquivo '{log_path}' não encontrado.")
-        return f"Erro: Arquivo '{log_path}' não encontrado."
-    except PermissionError:
-        logging.error(f"Erro: Permissão negada para deletar o arquivo '{log_path}'.")
-        return f"Erro: Permissão negada para deletar o arquivo '{log_path}'."
-    except Exception as e:
-        logging.error(f"Erro inesperado ao tentar deletar o arquivo: {e}")
-        return f"Erro inesperado ao tentar deletar o arquivo: {e}"
-
-
-def get_today_log():
-    today = today_date_str()
-    log_path = f'{ROOT_DIR}\\logs\\{today}.log'
-    
-    try:
-        with open(log_path, 'r', encoding='utf-8') as file:
+        with open(last_log_path, 'r', encoding='utf-8') as file:
             content = file.read()
         
         return content
     except FileNotFoundError:
-        logging.error(f"Arquivo '{log_path}' não encontrado.")
-        return f"Erro: Arquivo '{log_path}' não encontrado."
+        logging.error(f"Arquivo '{last_log_path}' não encontrado.")
+        return f"Erro: Arquivo '{last_log_path}' não encontrado."
     except Exception as e:
         logging.error(f"Erro ao ler o arquivo: {e}")
         return f"Erro ao ler o arquivo: {e}"

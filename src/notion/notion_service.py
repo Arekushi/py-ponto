@@ -1,4 +1,5 @@
 from notion_client import AsyncClient
+from src.notion.notion_block_helper import create_code_block
 
 
 class NotionService:
@@ -7,7 +8,9 @@ class NotionService:
 
     async def get_database_data(self, database_id, filter=None):
         try:
-            params = {'database_id': database_id}
+            params = {
+                'database_id': database_id
+            }
             
             if filter:
                 params['filter'] = filter
@@ -48,21 +51,7 @@ class NotionService:
             raise Exception(f'Erro ao obter propriedades do banco de dados: {e}')
     
     async def create_code_block(self, parent_id, content, language = 'plain text'):
-        block = {
-            'object': 'block',
-            'type': 'code',
-            'code': {
-                'rich_text': [
-                    {
-                        'type': 'text',
-                        'text': {
-                            'content': content
-                        }
-                    }
-                ],
-                'language': language
-            }
-        }
+        block = create_code_block(content, language)
         
         try:            
             response = await self.client.blocks.children.append(
@@ -75,21 +64,7 @@ class NotionService:
             raise Exception(f'Erro ao criar um code block: {e}')
     
     async def update_code_block(self, block_id, content, language = 'plain text'):
-        updated_block = {
-            'object': 'block',
-            'type': 'code',
-            'code': {
-                'rich_text': [
-                    {
-                        'type': 'text',
-                        'text': {
-                            'content': content
-                        }
-                    }
-                ],
-                'language': language
-            }
-        }
+        updated_block = create_code_block(content, language)
         
         try:
             response = await self.client.blocks.update(
@@ -103,7 +78,9 @@ class NotionService:
     
     async def search_blocks(self, parent_id, filter=None):
         try:
-            params = {'block_id': parent_id}
+            params = {
+                'block_id': parent_id
+            }
         
             if filter:
                 params['filter'] = filter
