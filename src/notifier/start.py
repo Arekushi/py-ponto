@@ -5,7 +5,7 @@ from config.config import settings
 from desktop_notifier import DEFAULT_SOUND, Button, DesktopNotifier, Urgency
 
 
-START_DELAY_TIME = settings.constants.start_minutes_delay * 60
+START_DELAY_TIME = settings.constants.start_minutes_delay
 
 
 async def start_notification(
@@ -51,7 +51,7 @@ async def start_notification(
 
     add_delay_time_task = asyncio.create_task(add_delay_time_event.wait())
     cancel_action_task = asyncio.create_task(cancel_action_event.wait())
-    timeout_task = asyncio.create_task(asyncio.sleep(START_DELAY_TIME))
+    timeout_task = asyncio.create_task(asyncio.sleep(START_DELAY_TIME * 60))
 
     _, pending = await asyncio.wait(
         [add_delay_time_task, cancel_action_task, timeout_task],
