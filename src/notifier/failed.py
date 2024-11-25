@@ -46,6 +46,7 @@ async def failed_notion(
             urgency=Urgency.Critical,
             on_clicked=None,
             on_dismissed=None,
+            timeout=10,
             sound=DEFAULT_SOUND,
         )
     )
