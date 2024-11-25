@@ -5,7 +5,7 @@ from config.config import settings
 from desktop_notifier import DEFAULT_SOUND, Button, DesktopNotifier, Urgency
 
 
-START_DELAY_TIME = settings.constants.start_minutes_delay
+START_DELAY_TIME = settings.constants.start_minutes_delay * 60
 
 
 async def start_notification(
@@ -32,16 +32,8 @@ async def start_notification(
         urgency=Urgency.Critical,
         buttons=[
             Button(
-                title='+15min',
-                on_pressed=lambda: add_delay_time(15 * 60),
-            ),
-            Button(
                 title='+30min',
                 on_pressed=lambda: add_delay_time(30 * 60),
-            ),
-            Button(
-                title='+45min',
-                on_pressed=lambda: add_delay_time(45 * 60),
             ),
             Button(
                 title='+1h',

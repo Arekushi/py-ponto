@@ -6,14 +6,13 @@ from config.config import settings
 from dependency_injector.wiring import inject, Provide
 from desktop_notifier import DesktopNotifier
 
-from notifier.success import success_clocking
 from src.actions import ACTIONS
 from src.selenium.pipeline_automation import PipelineAutomation
 from src.cantinho_trabalho.cantinho_trabalho_service import CantinhoTrabalhoService
 from src.helpers.log_helper import delete_yesterday_log, get_today_last_log
 from src.container import Container
 from src.notifier import start_notification, cancel_notification, \
-    failed_notion, success_notion, failed_clocking
+    failed_notion, success_notion, failed_clocking, success_clocking
 
 
 notifier = DesktopNotifier(
