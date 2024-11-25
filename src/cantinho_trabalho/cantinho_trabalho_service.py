@@ -54,7 +54,7 @@ class CantinhoTrabalhoService:
         if next_entry:
             return await self.update_time_entry(
                 page_id=today_time_entry['id'],
-                properties=self.get_next_entry(today_time_entry)
+                properties=next_entry
             )
         else:
             raise Exception('Não há mais entradas disponíveis para registro!')
