@@ -113,8 +113,6 @@ class PipelineAutomation:
                 
                 for callback in callbacks:
                     callback()
-            
-            quit()
 
     def quit(self):
         self.driver.quit()

@@ -48,6 +48,7 @@ async def start_automation():
     
     try:
         automation.execute_pipeline(ACTIONS)
+        automation.quit()
         await success_clocking(notifier)
     except Exception as e:
         logging.error(e)
