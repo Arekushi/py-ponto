@@ -1,17 +1,11 @@
 import logging
 
 from config.config import settings, ROOT_DIR
-from src.helpers.date_helper import now_adjusted_by_days, now_date_str
-from src.helpers.path_helper import delete_directory, get_latest_file
+from src.helpers.date_helper import now_date_str
+from src.helpers.path_helper import get_latest_file
 
 
 LOG_DIR = settings.constants.dirs.logging
-
-
-def delete_yesterday_log():
-    yesterday = now_adjusted_by_days(days=-1)
-    yesterday_log_dir = f'{ROOT_DIR}\\{LOG_DIR}\\{yesterday}'
-    delete_directory(yesterday_log_dir)
 
 
 def get_today_last_log():

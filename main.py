@@ -25,9 +25,7 @@ PORTAL_URL = settings.urls.portal
 @inject
 async def main(
     ct_service: CantinhoTrabalhoService = Provide[Container.cantinho_trabalho_service]
-):
-    delete_yesterday_log()
-    
+):    
     if (await ct_service.today_is_day_off()):
         return
     
