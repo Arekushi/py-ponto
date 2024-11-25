@@ -32,32 +32,85 @@ Se quiser o projeto para desenvolver, alguns pré-requisitos são necessários.
   1. Você pode instalar aqui: [Poetry][poetry_url]
 
 ## Variáveis sensíveis
-Eu guardo algumas variáveis sensíveis em alguns arquivos, estes deverão estar na pasta `config/toml`
+Eu guardo algumas variáveis sensíveis em alguns arquivos, estes deverão estar na pasta `config/yaml`
 
 ### .secrets.toml
 Algumas informações de login, tokens e chaves
-```toml
-[LOGIN]
-user = '...' # Email ou senha
-password = '...' # Código de acesso
+```yaml
+login:
+    user: '...' # Email ou username
+    password: '...' # Código de acesso, senha, etc
+urls:
+    portal: '...' # URL inicial do endereço onde é realizado a marcação de ponto
+chrome:
+    userdata: '...' # Diretório onde fica o UserData do Chrome
+```
 
-[NOTION]
-api_key = '...' # API Key da sua Integração com o Notion
+### notion.yaml
+Aqui, caso queira uma integração com o Notion, recomendo criar em uma página alguns databases com as seguintes propriedades. Aqui também fica a `api_key` da integração, que pode ser obtida [aqui][notion_integration].
 
-[URLS]
-base_url = '...' # URL inicial do endereço onde é realizado a marcação de ponto
+Você pode criar sua própria integração com o Notion, basta criar um serviço que use o `NotionService` e realize seus registros a maneira que quiser.
+
+**NÃO** é um elemento obrigatório, caso não queira a integração com o Notion.
+
+O modelo abaixo auxilia na construção desse serviço [aqui][cantinho_trabalho_service].
+
+```yaml
+notion:
+    api_key: '...' # API Key da sua Integração com o Notion
+    cantinho_trabalho:
+        databases:
+            marcacao_ponto:
+                id: '...'
+                properties:
+                    empresa:
+                        name: 'Empresa'
+                        type: 'relation'
+                    data:
+                        name: 'Data'
+                        type: 'date'
+                    entrada_1:
+                        name: 'Entrada 1'
+                        type: 'date'
+                    entrada_2:
+                        name: 'Entrada 2'
+                        type: 'date'
+                    entrada_3:
+                        name: 'Entrada 3'
+                        type: 'date'
+            empresas:
+                id: '...'
+                properties:
+                    status:
+                        name: 'Status'
+                        type: 'select'
+                        options:
+                            ativo: 'Ativo'
+                            desligado: 'Desligado'
+
+            folgas:
+                id: '...'
+                properties:
+                    dia_de_folga:
+                        name: 'Dia de Folga'
+                        type: 'date'
 ```
 
 ### xpath.toml
 XPATH dos elementos do site. Não há uma maneira padrão para criar, então é possível criar a sua maneira, aqui está apenas um exemplo.
-```toml
-[XPATH.MAIN]
-register_button = "..."
-
-[XPATH.LOGIN]
-email_input = "..."
-password_input = "..."
-login_button = "..."
+```yaml
+pages:
+    login:
+        confirm_preferences_a: "..."
+        goto_portal_input: "..."
+        user_input: "..."
+        next_input: "..."
+        password_input: "..."
+        login_span_button: "..."
+        stay_connected_yes_input: "..."
+    portal:
+        register_img: "..."
+        mark_a: "..."
 ```
 
 ## Outras variáveis dos arquivos `.toml`
@@ -65,12 +118,13 @@ Eu guardo algumas informações em arquivos `.toml` dentro da pasta `config`.
 
 ### settings.toml
 Algumas configurações de customização da aplicação.
-```toml
-[VARS]
-delay_minutes_range = 2 # Range de tempo aleatório
-
-[DIRS]
-logging = "logs" # Pasta onde serão salvos os logs
+```yaml
+constants:
+    start_minutes_delay: 5 # Delay de tempo para iniciar o processo
+    random_clocking_minutes_delay: 2 # Tempo aleatório de tempo para marcação do ponto
+    timeout_notification_minutes: 3 # Tempo de timeout para as interações das notificações
+    dirs:
+        logging: 'logs' # Diretório de logs a partir da raíz do projeto
 ```
 
 ## Actions
@@ -97,6 +151,11 @@ ACTIONS = [
         'xpath': '...'
     },
     {
+        'type': AT.KEYBOARD_SHORTCUT, # Realizará um comando do teclado
+        'keys': ['ctrl', 'alt', '0'], # Teclas a serem pressionadas
+        'undo_time': 10 # OPCIONAL: Tempo de cooldown para realizar a mesma combinação de teclas
+    }
+    {
         'type': AT.CUSTOM, # Irá executar uma ação customizada
         'callback': callback # Esse método receberá o driver e o WebDriverWait
     }
@@ -116,6 +175,8 @@ ACTIONS = [
 [python_tutorial_url]: https://www.digitalocean.com/community/tutorials/install-python-windows-10
 [miniconda_tutorial]: https://katiekodes.com/setup-python-windows-miniconda/
 [poetry_url]: https://python-poetry.org/docs/#installation
+[notion_integration]: https://www.notion.so/profile/integrations
+[cantinho_trabalho_service]: https://github.com/Arekushi/py-ponto/blob/main/src/cantinho_trabalho/cantinho_trabalho_service.py
 
 <!-- [Constributors] -->
 [arekushi]: https://github.com/Arekushi
