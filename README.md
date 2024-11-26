@@ -34,7 +34,7 @@ Se quiser o projeto para desenvolver, alguns pré-requisitos são necessários.
 ## Variáveis sensíveis
 Eu guardo algumas variáveis sensíveis em alguns arquivos, estes deverão estar na pasta `config/yaml`
 
-### .secrets.toml
+### .secrets.yaml
 Algumas informações de login, tokens e chaves
 ```yaml
 login:
@@ -96,7 +96,7 @@ notion:
                         type: 'date'
 ```
 
-### xpath.toml
+### xpath.yaml
 XPATH dos elementos do site. Não há uma maneira padrão para criar, então é possível criar a sua maneira, aqui está apenas um exemplo.
 ```yaml
 pages:
@@ -113,10 +113,10 @@ pages:
         mark_a: "..."
 ```
 
-## Outras variáveis dos arquivos `.toml`
-Eu guardo algumas informações em arquivos `.toml` dentro da pasta `config`.
+## Outras variáveis dos arquivos `.yaml`
+Eu guardo algumas informações em arquivos `.yaml` dentro da pasta `config/yaml`.
 
-### settings.toml
+### settings.yaml
 Algumas configurações de customização da aplicação.
 ```yaml
 constants:
