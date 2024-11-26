@@ -29,12 +29,12 @@ function Register-DeleteLogsTask {
     Register-ScheduledTask -Action $action -Trigger $trigger -Settings $settings -TaskName "PyPonto - Deletar Logs" -Description "Deleta os logs nos sábados às 13:00."
 }
 
-# Define the schedules for the multiple tasks
+# Define the schedules for the multiple tasks (adjusted to 5 minutes earlier)
 $taskSchedules = @(
-    @{ Name = "PyPonto - 09h"; Time = "09:00AM" },
-    @{ Name = "PyPonto - 12h"; Time = "12:00PM" },
-    @{ Name = "PyPonto - 13h"; Time = "01:00PM" },
-    @{ Name = "PyPonto - 18h"; Time = "06:00PM" }
+    @{ Name = "PyPonto - 09h"; Time = "08:55AM" },
+    @{ Name = "PyPonto - 12h"; Time = "11:55AM" },
+    @{ Name = "PyPonto - 13h"; Time = "12:55PM" },
+    @{ Name = "PyPonto - 18h"; Time = "05:55PM" }
 )
 
 # Call the function to register multiple tasks

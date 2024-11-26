@@ -185,9 +185,9 @@ No Windows, o processo é simples. Primeiro, será necessário criar os arquivos
 "C:\Users\user\miniconda3\envs\pyponto\python.exe" "C:\Users\user\Workspaces\Python\pyponto\main.py"
 ```
 
-Depois disso, crie o arquivo `create-tasks.ps1` com base no arquivo `create-task.ps1.dist`. Modifique o caminho dos arquivos `.bat` no final do script para que ele aponte para os locais corretos:
+Depois disso, crie o arquivo `create_tasks.ps1` com base no arquivo `create_tasks.ps1.dist`. Modifique o caminho dos arquivos `.bat` no final do script para que ele aponte para os locais corretos:
 
-#### Exemplo de `create-task.ps1`
+#### Exemplo de `create_tasks.ps1`
 ```ps1
 Register-MultipleTasks -BatFilePath "C:\Scripts\start.bat" -TaskSchedules $taskSchedules
 Register-DeleteLogsTask -BatFilePath "C:\Scripts\delete_logs.bat"
@@ -221,20 +221,20 @@ Por fim, abrir o `crontab` e adicionar no arquivo as tasks.
     ```
 * Abra o arquivo `create_tasks.sh.dist` e copie seu conteúdo. Lembre-se de ajustar o caminho do executável `.sh` para o caminho completo correspondente em sua máquina.
     ```sh
-    # Executar script às 9:00 de segunda a sexta-feira
-    0 9 * * 1-5 /path/to/your/start.sh
+    # Run script at 8:55 AM Monday to Friday
+    55 8 * * 1-5 /path/to/your/start.sh
 
-    # Executar script às 12:00 de segunda a sexta-feira
-    0 12 * * 1-5 /path/to/your/start.sh
+    # Run script at 11:55 AM Monday to Friday
+    55 11 * * 1-5 /path/to/your/start.sh
 
-    # Executar script às 13:00 de segunda a sexta-feira
-    0 13 * * 1-5 /path/to/your/start.sh
+    # Run script at 12:55 PM Monday to Friday
+    55 12 * * 1-5 /path/to/your/start.sh
 
-    # Executar script às 18:00 de segunda a sexta-feira
-    0 18 * * 1-5 /path/to/your/start.sh
+    # Run script at 5:55 PM Monday to Friday
+    55 17 * * 1-5 /path/to/your/start.sh
 
-    # Executar script para limpar logs às 13:00 todo sábado
-    0 13 * * 6 /path/to/your/delete_logs.sh
+    # Run script to delete logs at 12:55 PM every Saturday
+    55 12 * * 6 /path/to/your/delete_logs.sh
     ```
 
 
