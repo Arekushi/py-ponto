@@ -5,6 +5,7 @@ from functools import partial
 from config.config import settings
 from dependency_injector.wiring import inject, Provide
 
+from config.logging import setup_logging
 from src.actions import ACTIONS
 from src.container import Container
 from src.selenium.pipeline_automation import PipelineAutomation
@@ -68,5 +69,6 @@ async def record_notion(
 if __name__ == '__main__':
     container = Container()
     container.wire(modules=[__name__])
+    setup_logging()
 
     asyncio.run(main())
