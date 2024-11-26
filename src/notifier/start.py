@@ -32,7 +32,7 @@ async def start_notification(
     await notifier.send(
         title=f'Py Ponto irá bater o ponto em {START_DELAY_TIME} minuto(s)!',
         message='Deseja adiar em quantos minutos?',
-        urgency=Urgency.Critical,
+        urgency=Urgency.Normal,
         buttons=[
             Button(
                 title='+30min',

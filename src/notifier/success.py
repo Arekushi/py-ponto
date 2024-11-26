@@ -14,7 +14,7 @@ async def success_clocking(
     await notifier.send(
         title='Marcação finalizada',
         message='Ponto marcado com sucesso!',
-        urgency=Urgency.Critical,
+        urgency=Urgency.Normal,
         on_clicked=None,
         on_dismissed=None,
         timeout=10,
@@ -37,7 +37,7 @@ async def success_notion(
                     on_pressed=lambda: webbrowser.open(time_entry_url),
                 ),
             ],
-            urgency=Urgency.Critical,
+            urgency=Urgency.Normal,
             on_clicked=None,
             on_dismissed=None,
             timeout=10,

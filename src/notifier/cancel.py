@@ -24,7 +24,7 @@ async def cancel_notification(
                     on_pressed=lambda: webbrowser.open(PORTAL_URL),
                 ),
             ],
-            urgency=Urgency.Critical,
+            urgency=Urgency.Normal,
             on_clicked=None,
             on_dismissed=None,
             timeout=10,
