@@ -17,6 +17,15 @@
     Projeto de marcador automático de ponto universal usando o <a href="https://selenium-python.readthedocs.io/">Selenium</a> com integração com o <a href="https://notion.so">Notion</a>.
 </p>
 
+## Sobre
+A principal motivação para este projeto? `Preguiça`. Sim, isso mesmo: *preguiça*. Esta aplicação foi desenvolvida para automatizar o processo de registro de ponto, tornando a vida mais prática para quem, como eu, esquece facilmente das coisas ou simplesmente prefere simplificar tarefas repetitivas.
+
+Além de automatizar o registro de ponto, este projeto **também** se destaca por oferecer uma funcionalidade essencial: a documentação própria das marcações. Isso significa que você terá um histórico organizado e acessível das suas marcações de ponto, independente do sistema da empresa. Nesse contexto, o [Notion][notion] se encaixa perfeitamente, oferecendo a possibilidade de utilizá-lo como um banco de dados intuitivo e de fácil uso.
+
+A aplicação utiliza [Selenium][selenium], portanto, é necessário que o registro de ponto possa ser feito através de um site.
+
+Em atualizações futuras, pretendo incluir suporte para autenticação em duas etapas, usando emulador de Android por exemplo, ampliando as possibilidades de manter a automatização do processo.
+
 ## 🔨 Construído com
 - [Python v3.10][python]
 
@@ -244,6 +253,7 @@ Por fim, abrir o `crontab` e adicionar no arquivo as tasks.
 [poetry_url]: https://python-poetry.org/docs/#installation
 [notion_integration]: https://www.notion.so/profile/integrations
 [cantinho_trabalho_service]: https://github.com/Arekushi/py-ponto/blob/main/src/cantinho_trabalho/cantinho_trabalho_service.py
+[notion]: https://www.notion.so/
 
 <!-- [Constributors] -->
 [arekushi]: https://github.com/Arekushi
