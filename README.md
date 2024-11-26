@@ -166,7 +166,7 @@ ACTIONS = [
 Preparei alguns scripts e configurações prontos para uso, mas também é possível criar configurações personalizadas conforme sua necessidade. O processo envolve executar o script `main.py` para registrar o ponto e, eventualmente, usar o `delete_logs.py` para apagar os arquivos de log.
 
 ### Windows
-No Windows, o processo é simples. Primeiro, será necessário criar os arquivos `start.bat` e `delete_logs.bat`. Você encontrará versões de exemplo desses arquivos com a extensão `.dist`, localizadas no diretório `tasks/windows`.
+No Windows, o processo é simples. Primeiro, será necessário criar os arquivos `start.bat` e `delete_logs.bat`. Você encontrará versões de exemplo desses arquivos com a extensão `.dist`, localizadas no diretório `scripts/windows`.
 
 > Edite o caminho completo para apontar para o ambiente Python com as dependências e o script `main.py`. O mesmo procedimento se aplica ao `delete_logs.bat`.
 
@@ -185,7 +185,7 @@ Register-DeleteLogsTask -BatFilePath "C:\Scripts\delete_logs.bat"
 ```
 
 ### Linux (cron)
-Para agendar a execução dos scripts no Linux, utilizamos o `cron`. Crie os arquivos `start.sh` e `delete_logs.sh` com base nos exemplos `.dist`. Todos localizados no diretório `tasks/linux`
+Para agendar a execução dos scripts no Linux, utilizamos o `cron`. Crie os arquivos `start.sh` e `delete_logs.sh` com base nos exemplos `.dist`. Todos localizados no diretório `scripts/linux`
 
 #### Exemplo de `start.sh`
 > Certifique-se de ajustar os caminhos corretamente e garantir que os arquivos sejam executáveis.
