@@ -3,4 +3,4 @@
 main_script="/path/to/main.py"
 python_dir="/path/to/python"
 
-python_dir "$main_script"
+$python_dir "$main_script"

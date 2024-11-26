@@ -3,4 +3,4 @@
 delete_logs_script="/path/to/delete_logs.py"
 python_dir="/path/to/python"
 
-python_dir "$delete_logs_script"
+$python_dir "$delete_logs_script"
