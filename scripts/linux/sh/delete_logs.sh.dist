@@ -2,6 +2,7 @@
 
 export DISPLAY=:0.0
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
 
 delete_logs_script="/path/to/delete_logs.py"
 python_dir="/path/to/python"
