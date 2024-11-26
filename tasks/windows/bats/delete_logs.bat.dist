@@ -1,0 +1,2 @@
+@echo off
+"C:\Users\user\miniconda3\envs\pyponto\python.exe" "C:\Users\user\Workspaces\Python\pyponto\delete_logs.py"

@@ -177,6 +177,3 @@ cython_debug/
 
 # Logs
 logs
-
-# .bats
-start.bat

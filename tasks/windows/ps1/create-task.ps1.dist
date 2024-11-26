@@ -1,0 +1,44 @@
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+
+# Function to register multiple tasks
+function Register-MultipleTasks {
+    param (
+        [string]$BatFilePath,
+        [array]$TaskSchedules
+    )
+
+    foreach ($task in $TaskSchedules) {
+        $action = New-ScheduledTaskAction -Execute $BatFilePath
+        $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Monday,Tuesday,Wednesday,Thursday,Friday -At $task.Time
+
+        Register-ScheduledTask -Action $action -Trigger $trigger -Settings $settings -TaskName $task.Name -Description "Marca o ponto às $($task.Time) todo dia útil."
+    }
+}
+
+# Function to register a task to delete logs on Saturdays
+function Register-DeleteLogsTask {
+    param (
+        [string]$BatFilePath
+    )
+
+    # Define the action and trigger for the task
+    $action = New-ScheduledTaskAction -Execute $BatFilePath
+    $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Saturday -At "01:00PM"
+
+    $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+    Register-ScheduledTask -Action $action -Trigger $trigger -Settings $settings -TaskName "PyPonto - Deletar Logs" -Description "Deleta os logs nos sábados às 13:00."
+}
+
+# Define the schedules for the multiple tasks
+$taskSchedules = @(
+    @{ Name = "PyPonto - 09h"; Time = "09:00AM" },
+    @{ Name = "PyPonto - 12h"; Time = "12:00PM" },
+    @{ Name = "PyPonto - 13h"; Time = "01:00PM" },
+    @{ Name = "PyPonto - 18h"; Time = "06:00PM" }
+)
+
+# Call the function to register multiple tasks
+Register-MultipleTasks -BatFilePath "C:\Scripts\start.bat" -TaskSchedules $taskSchedules
+
+# Call the function to register the task to delete logs
+Register-DeleteLogsTask -BatFilePath "C:\Scripts\delete_logs.bat"
