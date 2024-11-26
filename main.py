@@ -25,10 +25,10 @@ PORTAL_URL = settings.urls.portal
 @inject
 async def main(
     ct_service: CantinhoTrabalhoService = Provide[Container.cantinho_trabalho_service]
-):    
+):
     if (await ct_service.today_is_day_off()):
         return
-    
+
     await start_notification(
         notifier,
         on_success_callbacks=[
@@ -43,7 +43,7 @@ async def main(
 
 async def start_automation():
     automation = PipelineAutomation(PORTAL_URL)
-    
+
     try:
         automation.execute_pipeline(ACTIONS)
         automation.quit()

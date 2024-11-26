@@ -10,7 +10,7 @@ PORTAL_URL = settings.urls.portal
 
 async def cancel_notification(
     notifier: DesktopNotifier
-):    
+):
     await timeout_notification(
         notifier.send(
             title='A ação de registrar o ponto foi cancelada com sucesso!',

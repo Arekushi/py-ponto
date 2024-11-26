@@ -10,7 +10,7 @@ LOG_DIR = settings.constants.dirs.logging
 
 def get_today_last_log():
     today = now_date_str()
-    log_path = f'{ROOT_DIR}\\{LOG_DIR}\\{today}'
+    log_path = f'{ROOT_DIR}/{LOG_DIR}/{today}'
     last_log_path = get_latest_file(log_path)
     
     try:

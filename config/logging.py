@@ -5,7 +5,7 @@ from config.config import settings
 from src.helpers.date_helper import now_date_str, now_datetime_str
 
 
-LOG_DIR = f'{settings.constants.dirs.logging}\\{now_date_str()}'
+LOG_DIR = f'{settings.constants.dirs.logging}/{now_date_str()}'
 LOG_FILENAME = os.path.join(LOG_DIR, f"{now_datetime_str('%Hh-%Mmin')}.log")
 
 

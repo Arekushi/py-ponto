@@ -5,7 +5,7 @@ import pytz
 BRASIL_TZ = pytz.timezone('America/Sao_Paulo')
 
 
-def now_adjusted_by_days(days, format='%Y-%m-%d'):    
+def now_adjusted_by_days(days, format='%Y-%m-%d'):
     original_date = datetime.now(BRASIL_TZ)
     adjusted_date = original_date + timedelta(days=days)
     return adjusted_date.strftime(format)
