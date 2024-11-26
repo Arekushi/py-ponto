@@ -162,6 +162,73 @@ ACTIONS = [
 ]
 ```
 
+## Configurando Scheduling Tasks
+Preparei alguns scripts e configurações prontos para uso, mas também é possível criar configurações personalizadas conforme sua necessidade. O processo envolve executar o script `main.py` para registrar o ponto e, eventualmente, usar o `delete_logs.py` para apagar os arquivos de log.
+
+### Windows
+No Windows, o processo é simples. Primeiro, será necessário criar os arquivos `start.bat` e `delete_logs.bat`. Você encontrará versões de exemplo desses arquivos com a extensão `.dist`, localizadas no diretório `tasks/windows`.
+
+> Edite o caminho completo para apontar para o ambiente Python com as dependências e o script `main.py`. O mesmo procedimento se aplica ao `delete_logs.bat`.
+
+#### Exemplo de `start.bat`
+```bat
+@echo off
+"C:\Users\user\miniconda3\envs\pyponto\python.exe" "C:\Users\user\Workspaces\Python\pyponto\main.py"
+```
+
+Depois disso, crie o arquivo `create-tasks.ps1` com base no arquivo `create-task.ps1.dist`. Modifique o caminho dos arquivos `.bat` no final do script para que ele aponte para os locais corretos:
+
+#### Exemplo de `create-task.ps1`
+```ps1
+Register-MultipleTasks -BatFilePath "C:\Scripts\start.bat" -TaskSchedules $taskSchedules
+Register-DeleteLogsTask -BatFilePath "C:\Scripts\delete_logs.bat"
+```
+
+### Linux (cron)
+Para agendar a execução dos scripts no Linux, utilizamos o `cron`. Crie os arquivos `start.sh` e `delete_logs.sh` com base nos exemplos `.dist`. Todos localizados no diretório `tasks/linux`
+
+#### Exemplo de `start.sh`
+> Certifique-se de ajustar os caminhos corretamente e garantir que os arquivos sejam executáveis.
+```sh
+#!/bin/bash
+
+main_script="/path/to/main.py"
+python_dir="/path/to/python"
+
+$python_dir "$main_script"
+```
+
+Depois disso, torne os `.sh` executáveis
+```sh
+chmod +x /path/to/start.sh
+chmod +x /path/to/delete_logs.sh
+```
+
+Por fim, abrir o `crontab` e adicionar no arquivo as tasks.
+
+* Executar este comando no terminal
+    ```sh
+    crontab -e
+    ```
+* Abrir e colar o conteúdo do arquivo `create_tasks.sh.dist`. Lembar de modificar o caminho para o executável `.sh` para o caminho completo em sua máquina.
+    ```sh
+    # Executar script às 9:00 de segunda a sexta-feira
+    0 9 * * 1-5 /path/to/your/start.sh
+
+    # Executar script às 12:00 de segunda a sexta-feira
+    0 12 * * 1-5 /path/to/your/start.sh
+
+    # Executar script às 13:00 de segunda a sexta-feira
+    0 13 * * 1-5 /path/to/your/start.sh
+
+    # Executar script às 18:00 de segunda a sexta-feira
+    0 18 * * 1-5 /path/to/your/start.sh
+
+    # Executar script para limpar logs às 13:00 todo sábado
+    0 13 * * 6 /path/to/your/delete_logs.sh
+    ```
+
+
 ## 👨‍💻 Contribuidores
 | [<div><img width=115 src="https://avatars.githubusercontent.com/u/54884313?v=4"><br><sub>Alexandre Ferreira de Lima</sub><br><sub>alexandre.ferreira1445@gmail.com</sub></div>][arekushi] <div title="Code">💻</div> |
 | :---: |
