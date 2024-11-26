@@ -219,7 +219,7 @@ Por fim, abrir o `crontab` e adicionar no arquivo as tasks.
     ```sh
     crontab -e
     ```
-* Abrir e colar o conteúdo do arquivo `create_tasks.sh.dist`. Lembar de modificar o caminho para o executável `.sh` para o caminho completo em sua máquina.
+* Abra o arquivo `create_tasks.sh.dist` e copie seu conteúdo. Lembre-se de ajustar o caminho do executável `.sh` para o caminho completo correspondente em sua máquina.
     ```sh
     # Executar script às 9:00 de segunda a sexta-feira
     0 9 * * 1-5 /path/to/your/start.sh
