@@ -1,5 +1,6 @@
 import logging
 import pyautogui
+from typing import List
 from time import sleep
 from config.config import settings
 
@@ -15,11 +16,13 @@ from src.selenium.action_type import ActionType as AT
 class PipelineAutomation:
     def __init__(self, url, wait_time=60):
         options = webdriver.ChromeOptions()
+        has_chrome_userdata = getattr(settings, 'chrome', None) \
+            and getattr(settings.chrome, 'userdata', None)
         
-        if getattr(settings, 'chrome', None) and getattr(settings.chrome, 'userdata', None):
+        if has_chrome_userdata:
             options.add_argument(rf"--user-data-dir={settings.chrome.userdata}")
             options.add_argument(r'--profile-directory=Default')
-            options.add_experimental_option("detach", True)
+            options.add_experimental_option('detach', True)
         
         self.driver = webdriver.Chrome(
             options=options,
@@ -38,7 +41,7 @@ class PipelineAutomation:
             AT.CUSTOM: self.execute_custom_action
         }
 
-    def wait_and_click(self, xpath):
+    def wait_and_click(self, xpath: str):
         try:
             element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
             element.click()
@@ -46,7 +49,7 @@ class PipelineAutomation:
         except Exception as e:
             raise Exception(f"Erro ao clicar no elemento de XPATH: '{xpath}'\n{e}")
 
-    def wait_and_input_text(self, xpath, value):
+    def wait_and_input_text(self, xpath: str, value):
         try:
             element = self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
             element.clear()
@@ -56,11 +59,11 @@ class PipelineAutomation:
         except Exception as e:
             raise Exception(f"Erro ao dar input no elemento de XPATH: '{xpath}'\n{e}")
             
-    def sleep_for_time(self, time):
+    def sleep_for_time(self, time: float):
         sleep(time)
         logging.info(f"Dormido por {time} segundos")
 
-    def wait_for_element(self, xpath):
+    def wait_for_element(self, xpath: str):
         try:
             element = self.wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
             logging.info(f"Elemento com XPATH '{xpath}' encontrado.")
@@ -75,12 +78,12 @@ class PipelineAutomation:
         except Exception as e:
             raise Exception(f"Erro ao executar ação customizada: {e}")
     
-    def execute_keyboard_shortcut(self, keys, undo_time):
+    def execute_keyboard_shortcut(self, keys: List[str], redo_time: float):
         try:
             pyautogui.hotkey(*keys)
             
-            if undo_time:
-                sleep(undo_time)
+            if redo_time:
+                sleep(redo_time)
                 pyautogui.hotkey(*keys)
             
             logging.info("Atalho de teclado executado com sucesso")
@@ -102,11 +105,11 @@ class PipelineAutomation:
                     callback = action.get('callback')
                     func(callback)
                 elif (action_type == AT.SLEEP):
-                    time = action.get('time')
+                    time = float(action.get('time'))
                     func(time)
                 elif (action_type == AT.KEYBOARD_SHORTCUT):
-                    keys = action.get('keys')
-                    undo_time = action.get('undo_time')
+                    keys = action.get('keys', [])
+                    undo_time = float(action.get('redo_time'))
                     func(keys, undo_time)
                 else:
                     func(xpath)

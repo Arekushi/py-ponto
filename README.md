@@ -153,7 +153,7 @@ ACTIONS = [
     {
         'type': AT.KEYBOARD_SHORTCUT, # Realizará um comando do teclado
         'keys': ['ctrl', 'alt', '0'], # Teclas a serem pressionadas
-        'undo_time': 10 # OPCIONAL: Tempo de cooldown para realizar a mesma combinação de teclas
+        'redo_time': 10 # OPCIONAL: Tempo de cooldown para realizar a mesma combinação de teclas
     }
     {
         'type': AT.CUSTOM, # Irá executar uma ação customizada

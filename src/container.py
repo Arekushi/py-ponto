@@ -1,5 +1,6 @@
-from dependency_injector import containers, providers
 from config.config import settings
+from dependency_injector import containers, providers
+from desktop_notifier import DesktopNotifier
 
 from src.cantinho_trabalho.cantinho_trabalho_service import CantinhoTrabalhoService
 from src.notion.notion_service import NotionService
@@ -17,4 +18,9 @@ class Container(containers.DeclarativeContainer):
         CantinhoTrabalhoService,
         notion_service=notion_service,
         databases=settings.notion.cantinho_trabalho.databases
+    )
+    
+    notifier = providers.Singleton(
+        DesktopNotifier,
+        app_name='Py Ponto'
     )

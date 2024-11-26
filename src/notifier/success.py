@@ -1,12 +1,15 @@
 import webbrowser
+from dependency_injector.wiring import inject, Provide
 
 from config.config import settings
 from desktop_notifier import DEFAULT_SOUND, Button, DesktopNotifier, Urgency
 from src.notifier import timeout_notification
+from src.container import Container
 
 
+@inject
 async def success_clocking(
-    notifier: DesktopNotifier
+    notifier: DesktopNotifier = Provide[Container.notifier]
 ):
     await notifier.send(
         title='Marcação finalizada',
@@ -19,10 +22,11 @@ async def success_clocking(
     )
 
 
+@inject
 async def success_notion(
-    notifier: DesktopNotifier,
-    time_entry_url: str
-): 
+    time_entry_url: str,
+    notifier: DesktopNotifier = Provide[Container.notifier],
+):
     await timeout_notification(
         notifier.send(
             title='Registro Notion finalizado',

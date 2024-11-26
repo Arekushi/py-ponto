@@ -1,17 +1,20 @@
 import asyncio
 import inspect
+from dependency_injector.wiring import inject, Provide
 
 from config.config import settings
 from desktop_notifier import DEFAULT_SOUND, Button, DesktopNotifier, Urgency
+from src.container import Container
 
 
 START_DELAY_TIME = settings.constants.start_minutes_delay
 
 
+@inject
 async def start_notification(
-    notifier: DesktopNotifier,
     on_success_callbacks=[],
-    on_cancel_callbacks=[]
+    on_cancel_callbacks=[],
+    notifier: DesktopNotifier = Provide[Container.notifier]
 ):
     add_delay_time_event = asyncio.Event()
     cancel_action_event = asyncio.Event()
