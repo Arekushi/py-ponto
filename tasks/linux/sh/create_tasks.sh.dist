@@ -1,0 +1,14 @@
+# Run script at 9:00 AM Monday to Friday
+0 9 * * 1-5 /path/to/your/start.sh
+
+# Run script at 12:00 PM Monday to Friday
+0 12 * * 1-5 /path/to/your/start.sh
+
+# Run script at 1:00 PM Monday to Friday
+0 13 * * 1-5 /path/to/your/start.sh
+
+# Run script at 6:00 PM Monday to Friday
+0 18 * * 1-5 /path/to/your/start.sh
+
+# Run script to delete logs at 1:00 PM every Saturday
+0 13 * * 6 /path/to/your/delete_logs.sh
