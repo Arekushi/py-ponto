@@ -82,7 +82,7 @@ class PipelineAutomation:
         try:
             pyautogui.hotkey(*keys)
             
-            if redo_time:
+            if redo_time > 0:
                 sleep(redo_time)
                 pyautogui.hotkey(*keys)
             
@@ -109,7 +109,7 @@ class PipelineAutomation:
                     func(time)
                 elif (action_type == AT.KEYBOARD_SHORTCUT):
                     keys = action.get('keys', [])
-                    undo_time = float(action.get('redo_time'))
+                    undo_time = float(action.get('redo_time', 0))
                     func(keys, undo_time)
                 else:
                     func(xpath)
