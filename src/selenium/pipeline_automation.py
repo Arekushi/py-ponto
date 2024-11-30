@@ -58,7 +58,7 @@ class PipelineAutomation:
             logging.info(f"Texto foi inserido no elemento com XPATH '{xpath}'.")
         except Exception as e:
             raise Exception(f"Erro ao dar input no elemento de XPATH: '{xpath}'\n{e}")
-            
+    
     def sleep_for_time(self, time: float):
         sleep(time)
         logging.info(f"Dormido por {time} segundos")
