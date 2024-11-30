@@ -14,7 +14,11 @@ from src.selenium.action_type import ActionType as AT
 
 
 class PipelineAutomation:
-    def __init__(self, url, wait_time=60):
+    def __init__(self, url, actions, wait_time=60):
+        self.url = url
+        self.actions = actions
+        self.wait_time = wait_time
+        
         options = webdriver.ChromeOptions()
         has_chrome_userdata = getattr(settings, 'chrome', None) \
             and getattr(settings.chrome, 'userdata', None)
@@ -29,8 +33,8 @@ class PipelineAutomation:
             service=Service(ChromeDriverManager().install())
         )
         
-        self.wait = WebDriverWait(self.driver, wait_time)
-        self.driver.get(url)
+        self.wait = WebDriverWait(self.driver, self.wait_time)
+        self.driver.get(self.url)
 
         self.action_map = {
             AT.CLICK: self.wait_and_click,
@@ -61,7 +65,7 @@ class PipelineAutomation:
     
     def sleep_for_time(self, time: float):
         sleep(time)
-        logging.info(f"Dormido por {time} segundos")
+        logging.info(f"Dormiu por {time} segundo(s).")
 
     def wait_for_element(self, xpath: str):
         try:
@@ -74,7 +78,7 @@ class PipelineAutomation:
     def execute_custom_action(self, callback):
         try:
             callback(self.driver, self.wait)
-            logging.info("Ação customizada executada com sucesso")
+            logging.info("Ação customizada executada com sucesso.")
         except Exception as e:
             raise Exception(f"Erro ao executar ação customizada: {e}")
     
@@ -86,12 +90,12 @@ class PipelineAutomation:
                 sleep(redo_time)
                 pyautogui.hotkey(*keys)
             
-            logging.info("Atalho de teclado executado com sucesso")
+            logging.info("Atalho de teclado executado com sucesso.")
         except Exception as e:
             raise Exception(f"Erro ao executar atalho de teclado: {e}")
 
-    def execute_pipeline(self, actions):
-        for action in actions:
+    def execute_pipeline(self):
+        for action in self.actions:
             action_type = action.get('type')
             xpath = action.get('xpath', None)
             callbacks = action.get('callbacks', [])
