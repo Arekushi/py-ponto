@@ -4,6 +4,7 @@ from dynaconf import Dynaconf
 settings = Dynaconf(
     load_dotenv=True,
     envvar_prefix=False,
+    merge_enabled=True,
     settings_files=[
         './yaml/settings.yaml',
         './yaml/xpath.yaml',
