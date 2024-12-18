@@ -51,8 +51,9 @@ login:
     password: '...' # Código de acesso, senha, etc
 urls:
     portal: '...' # URL inicial do endereço onde é realizado a marcação de ponto
-chrome:
-    userdata: '...' # Diretório onde fica o UserData do Chrome
+browser:
+    default: 'google-chrome' # Qual navegador será usado: google-chrome ou firefox
+    userdata: '...' # Diretório onde fica o profile do navegador
 ```
 
 ### notion.yaml
@@ -163,7 +164,7 @@ ACTIONS = [
         'type': AT.KEYBOARD_SHORTCUT, # Realizará um comando do teclado
         'keys': ['ctrl', 'alt', '0'], # Teclas a serem pressionadas
         'redo_time': 10 # OPCIONAL: Tempo de cooldown para realizar a mesma combinação de teclas
-    }
+    },
     {
         'type': AT.CUSTOM, # Irá executar uma ação customizada
         'callback': callback # Esse método receberá o driver e o WebDriverWait
