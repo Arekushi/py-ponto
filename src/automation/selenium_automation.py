@@ -6,34 +6,23 @@ from config.config import settings
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 
 from src.exceptions.automation_pipeline_exception import AutomationPipelineException
 from src.automation.selenium_automation_context import SeleniumAutomationContext
 from src.automation.action_type import ActionType as AT
+from src.automation.web_browser import WebBrowser
 
 
 class SeleniumAutomation:
     def __init__(self, url, wait_time=60):
-        self.url = url
-        
-        options = webdriver.ChromeOptions()
-        has_chrome_userdata = getattr(settings, 'chrome', None) \
-            and getattr(settings.chrome, 'userdata', None)
-        
-        if has_chrome_userdata:
-            options.add_argument(rf"--user-data-dir={settings.chrome.userdata}")
-            options.add_argument(r'--profile-directory=Default')
-            options.add_experimental_option('detach', True)
-        
-        self.driver = webdriver.Chrome(
-            options=options,
-            service=Service(ChromeDriverManager().install())
-        )
-        
+        self.url = url        
+        self.driver = self.__setup_driver()
         self.wait = WebDriverWait(self.driver, wait_time)
         self.driver.get(self.url)
 
@@ -46,7 +35,39 @@ class SeleniumAutomation:
             AT.CUSTOM: self.execute_custom_action,
             AT.IF_ELSE: self.execute_if_else
         }
-
+    
+    def __setup_driver(self):
+        web_browser = settings.browser.default
+        
+        if web_browser == WebBrowser.GOOGLE_CHROME.value:
+            options = webdriver.ChromeOptions()
+            
+            if (getattr(settings.browser, 'userdata', None)):
+                options.add_argument(rf"--user-data-dir={settings.browser.userdata}")
+                options.add_argument(r'--profile-directory=Default')
+                options.add_experimental_option('detach', True)
+            
+            return webdriver.Chrome(
+                options=options,
+                service=ChromeService(ChromeDriverManager().install())
+            )
+            
+        elif web_browser == WebBrowser.FIREFOX.value:
+            options = webdriver.FirefoxOptions()
+            
+            if (getattr(settings.browser, 'userdata', None)):
+                options.add_argument("-profile")
+                options.add_argument(settings.browser.userdata)
+            
+            return webdriver.Firefox(
+                options=options,
+                service=FirefoxService(GeckoDriverManager().install())
+            )
+        
+        raise AutomationPipelineException(
+            f'Opção de WebBrowser não suportada: {web_browser}'
+        )
+    
     def wait_and_click(self, xpath: str):
         try:
             element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))

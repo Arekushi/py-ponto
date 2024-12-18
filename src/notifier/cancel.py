@@ -3,7 +3,7 @@ from dependency_injector.wiring import inject, Provide
 
 from config.config import settings
 from desktop_notifier import DEFAULT_SOUND, Button, DesktopNotifier, Urgency
-from src.notifier import timeout_notification
+from src.notifier.timeout import timeout_notification
 from src.container import Container
 
 

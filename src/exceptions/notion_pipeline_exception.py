@@ -1,11 +1,10 @@
-from src.notifier.failed import failed_notion_notification
+from src.exceptions.application_exception import ApplicationException
 
 
-class NotionException(Exception):
+class NotionException(ApplicationException):
     def __init__(
         self,
         message,
-        title = 'Notion Exception',
-        notification = failed_notion_notification
+        title = 'Notion Exception'
     ):
-        super().__init__(message, title, notification)
+        super().__init__(message, title)

@@ -4,3 +4,5 @@ constants:
     timeout_notification_minutes: 3
     dirs:
         logging: 'logs'
+browser:
+    default: 'google-chrome'
