@@ -11,7 +11,7 @@ PORTAL_URL = settings.urls.portal
 
 
 @inject
-async def cancel_notification(
+async def cancel_automation_notification(
     notifier: DesktopNotifier = Provide[Container.notifier]
 ):
     await timeout_notification(

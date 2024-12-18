@@ -11,7 +11,7 @@ START_DELAY_TIME = settings.constants.start_minutes_delay
 
 
 @inject
-async def start_notification(
+async def start_automation_notification(
     on_success_callbacks=[],
     on_cancel_callbacks=[],
     notifier: DesktopNotifier = Provide[Container.notifier]

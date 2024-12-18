@@ -1,4 +1,5 @@
 from notion_client import AsyncClient
+from exceptions.notion_pipeline_exception import NotionException
 from src.notion.notion_block_helper import create_code_block
 
 
@@ -19,7 +20,9 @@ class NotionService:
             
             return response['results']
         except Exception as e:
-            raise Exception(f'Erro ao obter dados do banco de dados: {e}')
+            raise NotionException(
+                f'Erro ao obter dados do banco de dados: {e}'
+            )
 
     async def add_database_row(self, database_id, properties):
         try:
@@ -30,7 +33,9 @@ class NotionService:
             
             return response
         except Exception as e:
-            raise Exception(f'Erro ao adicionar linha no banco de dados: {e}')
+            raise NotionException(
+                f'Erro ao adicionar linha no banco de dados: {e}'
+            )
     
     async def update_database_row(self, page_id, properties):
         try:
@@ -41,14 +46,18 @@ class NotionService:
             
             return response
         except Exception as e:
-            raise Exception(f'Erro ao atualizar linha no banco de dados: {e}')
+            raise NotionException(
+                f'Erro ao atualizar linha no banco de dados: {e}'
+            )
 
     async def get_database_properties(self, database_id):
         try:
             response = await self.client.databases.retrieve(database_id=database_id)
             return response.get('properties', {})
         except Exception as e:
-            raise Exception(f'Erro ao obter propriedades do banco de dados: {e}')
+            raise NotionException(
+                f'Erro ao obter propriedades do banco de dados: {e}'
+            )
     
     async def create_code_block(self, parent_id, content, language = 'plain text'):
         block = create_code_block(content, language)
@@ -61,7 +70,9 @@ class NotionService:
             
             return response
         except Exception as e:
-            raise Exception(f'Erro ao criar um code block: {e}')
+            raise NotionException(
+                f'Erro ao criar um code block: {e}'
+            )
     
     async def update_code_block(self, block_id, content, language = 'plain text'):
         updated_block = create_code_block(content, language)
@@ -74,7 +85,9 @@ class NotionService:
             
             return response
         except Exception as e:
-            raise Exception(f'Erro ao atualizar o code block: {e}')
+            raise NotionException(
+                f'Erro ao atualizar o code block: {e}'
+            )
     
     async def search_blocks(self, parent_id, filter=None):
         try:
@@ -88,4 +101,6 @@ class NotionService:
             response = await self.client.blocks.children.list(**params)
             return response.get('results', [])
         except Exception as e:
-            raise Exception(f'Erro ao buscar o bloco: {e}')
+            raise NotionException(
+                f'Erro ao buscar o bloco: {e}'
+            )

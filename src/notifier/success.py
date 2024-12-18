@@ -8,7 +8,7 @@ from src.container import Container
 
 
 @inject
-async def success_clocking(
+async def success_clocking_notification(
     notifier: DesktopNotifier = Provide[Container.notifier]
 ):
     await notifier.send(
@@ -23,7 +23,7 @@ async def success_clocking(
 
 
 @inject
-async def success_notion(
+async def success_notion_notification(
     time_entry_url: str,
     notifier: DesktopNotifier = Provide[Container.notifier],
 ):

@@ -11,7 +11,7 @@ PORTAL_URL = settings.urls.portal
 
 
 @inject
-async def failed_clocking(
+async def failed_clocking_notification(
     notifier: DesktopNotifier = Provide[Container.notifier]
 ):
     await timeout_notification(
@@ -34,7 +34,7 @@ async def failed_clocking(
 
 
 @inject
-async def failed_notion(
+async def failed_notion_notification(
     notifier: DesktopNotifier = Provide[Container.notifier],
 ):
     await timeout_notification(

@@ -8,3 +8,4 @@ class ActionType(Enum):
     SLEEP = 'sleep'
     KEYBOARD_SHORTCUT = 'keyboard_shortcut'
     CUSTOM = 'custom'
+    IF_ELSE = 'if_else'
