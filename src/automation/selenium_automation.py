@@ -12,7 +12,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
 from src.exceptions.automation_pipeline_exception import AutomationPipelineException
-from src.automation.automation_context import AutomationContext
+from src.automation.selenium_automation_context import SeleniumAutomationContext
 from src.automation.action_type import ActionType as AT
 
 
@@ -85,7 +85,7 @@ class SeleniumAutomation:
     
     def execute_custom_action(self, callback):
         try:
-            callback(AutomationContext(self.driver, self.wait))
+            callback(SeleniumAutomationContext(self.driver, self.wait))
             logging.info("Ação customizada executada com sucesso.")
         except Exception as e:
             raise AutomationPipelineException(
@@ -108,7 +108,7 @@ class SeleniumAutomation:
 
     def execute_if_else(self, condition_callback, true_actions, false_actions):
         try:
-            result = condition_callback(AutomationContext(self.driver, self.wait))
+            result = condition_callback(SeleniumAutomationContext(self.driver, self.wait))
             
             if result:
                 self.execute_pipeline(true_actions)

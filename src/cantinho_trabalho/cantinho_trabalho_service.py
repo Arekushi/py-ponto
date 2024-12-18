@@ -1,5 +1,5 @@
-from exceptions.notion_pipeline_exception import NotionException
 from src.helpers.date_helper import now_date_str, now_datetime_str
+from src.exceptions.notion_pipeline_exception import NotionException
 from src.notion.notion_service import NotionService
 
 

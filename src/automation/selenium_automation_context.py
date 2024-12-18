@@ -4,6 +4,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 @dataclass
-class AutomationContext:
+class SeleniumAutomationContext:
     driver: WebDriver
     wait: WebDriverWait

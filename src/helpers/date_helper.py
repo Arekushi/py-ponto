@@ -1,5 +1,5 @@
-from datetime import datetime
 import pytz
+from datetime import datetime
 
 
 BRASIL_TZ = pytz.timezone('America/Sao_Paulo')

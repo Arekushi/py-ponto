@@ -1,5 +1,6 @@
 from notion_client import AsyncClient
-from exceptions.notion_pipeline_exception import NotionException
+
+from src.exceptions.notion_pipeline_exception import NotionException
 from src.notion.notion_block_helper import create_code_block
 
 

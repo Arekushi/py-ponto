@@ -6,9 +6,9 @@ from config.config import settings
 from dependency_injector.wiring import inject, Provide
 
 from config.logging import setup_logging
-from exceptions.application_exception import ApplicationException
 from src.actions import ACTIONS
 from src.container import Container
+from src.exceptions.application_exception import ApplicationException
 from src.automation.selenium_automation import SeleniumAutomation
 from src.cantinho_trabalho.cantinho_trabalho_service import CantinhoTrabalhoService
 from src.helpers.log_helper import get_today_last_log
