@@ -53,7 +53,7 @@ class NotionService:
     async def create_code_block(self, parent_id, content, language = 'plain text'):
         block = create_code_block(content, language)
         
-        try:            
+        try:
             response = await self.client.blocks.children.append(
                 block_id=parent_id,
                 children=[block]

@@ -37,10 +37,10 @@ async def main(
 
 
 async def start_automation():
-    automation = PipelineAutomation(PORTAL_URL)
+    automation = PipelineAutomation(PORTAL_URL, ACTIONS)
 
     try:
-        automation.execute_pipeline(ACTIONS)
+        automation.execute_pipeline()
         automation.quit()
         await success_clocking()
     except Exception as e:
